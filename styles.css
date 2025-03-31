@@ -1,5 +1,4 @@
 styles.css
-/* Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -30,7 +29,6 @@ body {
     overflow: visible;
 }
 
-/* Header Styles */
 .game-header {
     display: flex;
     justify-content: space-between;
@@ -77,7 +75,6 @@ body {
     margin-right: 10px;
 }
 
-/* Game Area */
 .game-area {
     flex: 1;
     position: relative;
@@ -117,7 +114,7 @@ body {
     0% { box-shadow: 0 0 10px rgba(255, 170, 170, 0.8); }
     100% { box-shadow: 0 0 20px rgba(255, 170, 170, 0.8), 0 0 30px rgba(255, 170, 170, 0.6); }
 }
-/* Control Buttons */
+
 .controls {
     display: flex;
     justify-content: space-around;
@@ -211,7 +208,6 @@ button:active {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Rainbow Progress */
 .rainbow-progress {
     position: absolute;
     bottom: 0;
@@ -320,7 +316,6 @@ button:active {
     opacity: 1;
 }
 
-/* Modals */
 .modal {
     position: fixed;
     top: 0;
@@ -411,12 +406,10 @@ button:active {
     cursor: pointer;
 }
 
-/* Utility Classes */
 .hidden {
     display: none;
 }
 
-/* Media Queries for Responsiveness */
 @media (max-width: 768px) {
     .game-title {
         font-size: 1.8rem;

@@ -6,6 +6,24 @@
     <title>Rainbow Readers Balloon Pop</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Add this just before the closing </head> tag in index.html -->
+<style>
+  .rainbow-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  .controls {
+    position: relative;
+    z-index: 10;
+    margin-bottom: 20px;
+  }
+</style>
 </head>
 <body>
     <div class="game-container">

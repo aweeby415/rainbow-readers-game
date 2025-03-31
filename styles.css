@@ -203,40 +203,39 @@ button:active {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Rainbow Progress */
+/* Move the rainbow to the back of everything */
 .rainbow-progress {
-    position: relative;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    z-index: 1;
-    pointer-events: none; /* This makes the rainbow "click-through" */
-}
-
-.rainbow-layer {
     position: absolute;
-    border-radius: 1000px 1000px 0 0;
-    border-bottom: none;
-    opacity: 0.3;
-    transition: opacity 0.5s;
-    pointer-events: none; /* This makes each layer "click-through" */
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    pointer-events: none;
+    z-index: -1; /* Negative z-index puts it behind everything */
 }
 
-/* Controls need higher z-index */
+/* Make sure controls are positioned correctly */
 .controls {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 15px;
     position: relative;
-    z-index: 50; /* Much higher than rainbow */
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    margin-bottom: 100px; /* Push above the rainbow */
+    padding: 15px;
+    z-index: 100;
+    border-radius: 20px;
 }
 
-/* Make sure buttons are clickable */
+/* Make buttons more clickable */
 .correct-button, .try-again-button, .record-button {
     position: relative;
-    z-index: 100; /* Highest z-index */
+    z-index: 100;
+    transform: translateY(0); /* Ensure they're not being transformed elsewhere */
+}
+
+/* Adjust game container to accommodate changes */
+.game-container {
+    position: relative;
+    overflow: visible; /* Allow overflow for absolute positioning */
+}
 }
 .rainbow-layer.active {
     opacity: 1;

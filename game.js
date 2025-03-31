@@ -1,4 +1,307 @@
 game.js
+// game.js - Main game functionality for Rainbow Readers Balloon Pop Game
+
+// Log successful load
+console.log("Game file loading...");
+
+// DOM Elements
+const gameCanvas = document.getElementById('game-canvas');
+const ctx = gameCanvas.getContext('2d');
+const wordDisplay = document.getElementById('word-display');
+const revealedWord = document.getElementById('revealed-word');
+const recordBtn = document.getElementById('record-btn');
+const correctBtn = document.getElementById('correct-btn');
+const tryAgainBtn = document.getElementById('try-again-btn');
+const startBtn = document.getElementById('start-btn');
+const helpBtn = document.getElementById('help-btn');
+const scoreDisplay = document.getElementById('score');
+const currentLevelText = document.getElementById('current-level-text');
+const helpModal = document.getElementById('help-modal');
+const celebrationModal = document.getElementById('celebration-modal');
+const goldCelebrationModal = document.getElementById('gold-celebration-modal');
+const celebrationMessage = document.getElementById('celebration-message');
+const continueBtn = document.getElementById('continue-btn');
+const playAgainBtn = document.getElementById('play-again-btn');
+const closeButton = document.querySelector('.close-button');
+const rainbowLayers = Array.from(document.querySelectorAll('.rainbow-layer'));
+const potOfGold = document.getElementById('pot-of-gold');
+const rainbowAnimation = document.getElementById('rainbow-animation');
+const celebrationCoins = document.getElementById('celebration-coins');
+const potAnimation = document.getElementById('pot-animation');
+const allWordsContainer = document.getElementById('all-words');
+
+// Game state
+let currentLevel = 'red';
+let currentLevelIndex = 0;
+let mastered = {
+    red: [],
+    orange: [],
+    yellow: [],
+    green: [],
+    blue: [],
+    purple: [],
+    pink: [],
+    gold: []
+};
+let currentWords = [];
+let activeWord = null;
+let score = 0;
+let balloons = [];
+let gameRunning = false;
+let animationFrameId = null;
+let lastBalloonSpawn = 0;
+let spawnInterval = 4000; // Time between balloon spawns (ms)
+let canvasWidth, canvasHeight;
+
+// Sound effects - create empty Audio objects first, then assign sources
+const popSound = new Audio();
+const correctSound = new Audio();
+const wrongSound = new Audio();
+const levelUpSound = new Audio();
+const finishSound = new Audio();
+
+// Set sound sources
+try {
+    popSound.src = 'sounds/pop.mp3';
+    correctSound.src = 'sounds/correct.mp3';
+    wrongSound.src = 'sounds/wrong.mp3';
+    levelUpSound.src = 'sounds/level-up.mp3';
+    finishSound.src = 'sounds/gold-complete.mp3';
+    console.log("Sound files assigned");
+} catch (error) {
+    console.error("Error loading sounds:", error);
+}
+
+// Initialize game when window loads
+window.addEventListener('load', initGame);
+window.addEventListener('resize', setCanvasSize);
+
+// Button event listeners
+startBtn.addEventListener('click', startGame);
+helpBtn.addEventListener('click', showHelp);
+closeButton.addEventListener('click', hideHelp);
+recordBtn.addEventListener('click', handleRecording);
+correctBtn.addEventListener('click', handleCorrect);
+tryAgainBtn.addEventListener('click', handleTryAgain);
+continueBtn.addEventListener('click', continuePlaying);
+playAgainBtn.addEventListener('click', resetGame);
+
+// Touch and mouse events for canvas
+gameCanvas.addEventListener('click', handleCanvasClick);
+gameCanvas.addEventListener('touchstart', handleCanvasTouch);
+
+// Initialize the game
+function initGame() {
+    console.log("Initializing game...");
+    setCanvasSize();
+    loadGameProgress();
+    updateRainbowProgress();
+    updateScoreDisplay();
+    updateLevelIndicator();
+    console.log("Game initialized");
+}
+
+// Set canvas size
+function setCanvasSize() {
+    const gameArea = document.querySelector('.game-area');
+    canvasWidth = gameArea.clientWidth;
+    canvasHeight = gameArea.clientHeight;
+    
+    gameCanvas.width = canvasWidth;
+    gameCanvas.height = canvasHeight;
+    
+    // Redraw if game is running
+    if (gameRunning) {
+        drawGame();
+    }
+}
+
+// Start the game
+function startGame() {
+    console.log("Starting game...");
+    startBtn.classList.add('hidden');
+    recordBtn.classList.add('hidden');
+    correctBtn.classList.add('hidden');
+    tryAgainBtn.classList.add('hidden');
+    
+    resetCurrentLevel();
+    gameRunning = true;
+    lastBalloonSpawn = Date.now();
+    
+    // Start game loop
+    gameLoop();
+}
+
+// Game loop
+function gameLoop() {
+    // Clear canvas
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    
+    // Check if we need to spawn a new balloon
+    const currentTime = Date.now();
+    if (currentTime - lastBalloonSpawn > spawnInterval && balloons.length < 3 && currentWords.length > 0) {
+        spawnBalloon();
+        lastBalloonSpawn = currentTime;
+    }
+    
+    // Update and draw balloons
+    updateBalloons();
+    drawGame();
+    
+    // Continue the game loop
+    animationFrameId = requestAnimationFrame(gameLoop);
+}
+
+// Reset current level words
+function resetCurrentLevel() {
+    // Get all words for current level that aren't mastered yet
+    const allLevelWords = WORD_LEVELS[currentLevel];
+    const masteredWords = mastered[currentLevel];
+    
+    currentWords = allLevelWords.filter(word => !masteredWords.includes(word));
+    
+    // If all words are mastered, player should move to next level
+    if (currentWords.length === 0 && currentLevelIndex < LEVEL_ORDER.length - 1) {
+        showLevelCompleteCelebration();
+    } else if (currentWords.length === 0 && currentLevelIndex === LEVEL_ORDER.length - 1) {
+        // All levels complete!
+        showGoldCompleteCelebration();
+    }
+    
+    // Clear any existing balloons
+    balloons = [];
+}
+
+// Balloon class
+class Balloon {
+    constructor(word, color) {
+        this.word = word;
+        this.color = color;
+        this.radius = 45;
+        this.x = Math.random() * (canvasWidth - this.radius * 2) + this.radius;
+        this.y = canvasHeight + this.radius;
+        this.speed = 0.5 + Math.random() * 0.3; // Random speed between 0.5 and 0.8
+        this.popped = false;
+        this.highlight = {
+            x: -15,
+            y: -10,
+            radius: 15
+        };
+        this.stringWave = 0;
+        this.stringWaveSpeed = 0.05;
+    }
+    
+    update() {
+        if (this.popped) return;
+        
+        // Move balloon upward
+        this.y -= this.speed;
+        
+        // Animate string wave
+        this.stringWave += this.stringWaveSpeed;
+        
+        // If balloon goes off-screen, reset position
+        if (this.y < -this.radius) {
+            this.x = Math.random() * (canvasWidth - this.radius * 2) + this.radius;
+            this.y = canvasHeight + this.radius;
+        }
+    }
+    
+    draw() {
+        if (this.popped) return;
+        
+        // Draw balloon
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        
+        // Create gradient for balloon
+        const gradient = ctx.createRadialGradient(
+            this.x - 10, this.y - 10, 5,
+            this.x, this.y, this.radius
+        );
+        
+        // Get colors from level settings
+        const colors = LEVEL_COLORS[currentLevel].gradient;
+        gradient.addColorStop(0, colors[0]);
+        gradient.addColorStop(0.7, colors[1]);
+        gradient.addColorStop(1, colors[2]);
+        
+        ctx.fillStyle = gradient;
+        ctx.fill();
+        ctx.strokeStyle = colors[1];
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        // Draw highlight
+        ctx.beginPath();
+        ctx.arc(this.x + this.highlight.x, this.y + this.highlight.y, this.highlight.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.fill();
+        
+        // Draw smaller highlight
+        ctx.beginPath();
+        ctx.arc(this.x + this.highlight.x + 5, this.y + this.highlight.y + 5, 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+        ctx.fill();
+        
+        // Draw string with wave
+        ctx.beginPath();
+        const stringStartY = this.y + this.radius;
+        const stringLength = 30;
+        const waveAmplitude = 3;
+        const waveOffset = Math.sin(this.stringWave) * waveAmplitude;
+        
+        ctx.moveTo(this.x, stringStartY);
+        ctx.bezierCurveTo(
+            this.x + waveOffset, stringStartY + stringLength * 0.3,
+            this.x - waveOffset, stringStartY + stringLength * 0.6,
+            this.x, stringStartY + stringLength
+        );
+        
+        ctx.strokeStyle = '#666';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([2, 2]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        
+        // Draw word
+        ctx.font = '28px "Comic Neue", cursive';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = LEVEL_COLORS[currentLevel].textColor;
+        ctx.fillText(this.word, this.x, this.y);
+    }
+    
+    isClicked(x, y) {
+        // Check if click/tap is inside balloon
+        const distance = Math.sqrt((x - this.x) ** 2 + (y - this.y) ** 2);
+        return distance <= this.radius;
+    }
+    
+    pop() {
+        this.popped = true;
+        try {
+            popSound.play().catch(err => console.log("Sound play error:", err));
+        } catch (e) {
+            console.log("Pop sound error:", e);
+        }
+        activeWord = this.word;
+        
+        // Show word display
+        wordDisplay.classList.remove('hidden');
+        revealedWord.textContent = this.word;
+        
+        // Show record and verification buttons
+        recordBtn.classList.remove('hidden');
+        correctBtn.classList.remove('hidden');
+        tryAgainBtn.classList.remove('hidden');
+        
+        // Pause game loop
+        cancelAnimationFrame(animationFrameId);
+        gameRunning = false;
+    }
+}
+
 // Spawn a new balloon
 function spawnBalloon() {
     if (currentWords.length === 0) return;
@@ -82,7 +385,11 @@ function handleRecording() {
 function handleCorrect() {
     if (!activeWord) return;
     
-    correctSound.play();
+    try {
+        correctSound.play().catch(err => console.log("Sound play error:", err));
+    } catch (e) {
+        console.log("Correct sound error:", e);
+    }
     
     // Add word to mastered list
     if (!mastered[currentLevel].includes(activeWord)) {
@@ -125,7 +432,11 @@ function handleCorrect() {
 function handleTryAgain() {
     if (!activeWord) return;
     
-    wrongSound.play();
+    try {
+        wrongSound.play().catch(err => console.log("Sound play error:", err));
+    } catch (e) {
+        console.log("Wrong sound error:", e);
+    }
     
     // Return word to pool if it was removed
     if (!currentWords.includes(activeWord)) {
@@ -172,7 +483,11 @@ function hideHelp() {
 
 // Show level complete celebration
 function showLevelCompleteCelebration() {
-    levelUpSound.play();
+    try {
+        levelUpSound.play().catch(err => console.log("Sound play error:", err));
+    } catch (e) {
+        console.log("Level up sound error:", e);
+    }
     
     // Update celebration message
     const currentLevelName = LEVEL_COLORS[currentLevel].name;
@@ -194,7 +509,11 @@ function showLevelCompleteCelebration() {
 
 // Show gold level complete celebration
 function showGoldCompleteCelebration() {
-    finishSound.play();
+    try {
+        finishSound.play().catch(err => console.log("Sound play error:", err));
+    } catch (e) {
+        console.log("Finish sound error:", e);
+    }
     
     // Create pot of gold animation
     createPotOfGoldCelebration();
@@ -413,19 +732,29 @@ function saveGameProgress() {
         score
     };
     
-    localStorage.setItem('rainbowReadersProgress', JSON.stringify(gameData));
+    try {
+        localStorage.setItem('rainbowReadersProgress', JSON.stringify(gameData));
+    } catch (e) {
+        console.log("localStorage error:", e);
+    }
 }
 
 // Load game progress from localStorage
 function loadGameProgress() {
-    const savedData = localStorage.getItem('rainbowReadersProgress');
-    
-    if (savedData) {
-        const gameData = JSON.parse(savedData);
+    try {
+        const savedData = localStorage.getItem('rainbowReadersProgress');
         
-        mastered = gameData.mastered;
-        currentLevel = gameData.currentLevel;
-        currentLevelIndex = gameData.currentLevelIndex;
-        score = gameData.score;
+        if (savedData) {
+            const gameData = JSON.parse(savedData);
+            
+            mastered = gameData.mastered;
+            currentLevel = gameData.currentLevel;
+            currentLevelIndex = gameData.currentLevelIndex;
+            score = gameData.score;
+        }
+    } catch (e) {
+        console.log("Error loading saved game:", e);
     }
 }
+
+console.log("Game file loaded successfully!");

@@ -1,6 +1,7 @@
 words.js
 // words.js - Rainbow Readers Sight Word Levels
 
+// Define the word levels object
 const WORD_LEVELS = {
     red: [
         "I",
@@ -114,3 +115,5 @@ const LEVEL_COLORS = {
 
 // Order of the levels
 const LEVEL_ORDER = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "gold"];
+
+console.log("Words file loaded successfully!");

@@ -854,7 +854,38 @@ function saveGameProgress() {
         console.log("localStorage error:", e);
     }
 }
-
+// Find this function and update it:
+function resetGame() {
+  goldCelebrationModal.classList.add('hidden');
+  
+  // Reset mastered words completely
+  mastered = {
+    red: [],
+    orange: [],
+    yellow: [],
+    green: [],
+    blue: [],
+    purple: [],
+    pink: [],
+    gold: []
+  };
+  
+  // Reset level and score
+  currentLevelIndex = 0;
+  currentLevel = LEVEL_ORDER[currentLevelIndex];
+  score = 0;
+  
+  // Update UI
+  updateLevelIndicator();
+  updateRainbowProgress();
+  updateScoreDisplay();
+  
+  // Reset current level
+  resetCurrentLevel();
+  
+  // Show start button
+  startBtn.classList.remove('hidden');
+}
 // Load game progress from localStorage
 function loadGameProgress() {
     try {

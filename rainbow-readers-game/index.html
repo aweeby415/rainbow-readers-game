@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rainbow Readers Balloon Pop</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <div class="level-indicator">
+                <span id="current-level-text">RED LEVEL</span>
+            </div>
+            <h1 class="game-title">Rainbow Balloons</h1>
+            <div class="score-display">
+                <span id="score">0</span>
+            </div>
+        </div>
+        
+        <div class="game-area">
+            <canvas id="game-canvas"></canvas>
+            <div id="word-display" class="hidden">
+                <p id="revealed-word"></p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="record-btn" class="record-button hidden">
+                <div class="mic-icon"></div>
+                <span>RECORD</span>
+            </button>
+            <button id="correct-btn" class="correct-button hidden">Correct!</button>
+            <button id="try-again-btn" class="try-again-button hidden">Try Again</button>
+            <button id="start-btn" class="start-button">Start Game</button>
+            <button id="help-btn" class="help-button">?</button>
+        </div>
+        
+        <div class="rainbow-progress">
+            <div class="rainbow-layer" id="red-layer"></div>
+            <div class="rainbow-layer" id="orange-layer"></div>
+            <div class="rainbow-layer" id="yellow-layer"></div>
+            <div class="rainbow-layer" id="green-layer"></div>
+            <div class="rainbow-layer" id="blue-layer"></div>
+            <div class="rainbow-layer" id="purple-layer"></div>
+            <div class="rainbow-layer" id="pink-layer"></div>
+            <div class="rainbow-layer" id="gold-layer"></div>
+            <div id="pot-of-gold" class="hidden"></div>
+        </div>
+    </div>
+    
+    <div id="help-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>How to Play</h2>
+            <p>1. Pop the balloons by tapping or clicking on them</p>
+            <p>2. Read the word that appears</p>
+            <p>3. Press RECORD and say the word</p>
+            <p>4. A grown-up will press Correct or Try Again</p>
+            <p>5. Complete all words to move to the next color!</p>
+        </div>
+    </div>
+    
+    <div id="celebration-modal" class="modal hidden">
+        <div class="modal-content celebration">
+            <h2>Congratulations!</h2>
+            <p id="celebration-message"></p>
+            <div id="rainbow-animation"></div>
+            <div id="celebration-coins"></div>
+            <button id="continue-btn" class="continue-button">Continue</button>
+        </div>
+    </div>
+    
+    <div id="gold-celebration-modal" class="modal hidden">
+        <div class="modal-content gold-celebration">
+            <h2>WOW! You completed all colors!</h2>
+            <div id="pot-animation"></div>
+            <div id="all-words"></div>
+            <button id="play-again-btn" class="continue-button">Play Again</button>
+        </div>
+    </div>
+    
+    <script src="words.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 // ================ WORDS.JS SECTION ================
+// ================ WORDS.JS SECTION ================
 console.log("Loading combined JavaScript file...");
 
 // Rainbow Readers Sight Word Levels
@@ -784,13 +785,30 @@ function continuePlaying() {
 function resetGame() {
     goldCelebrationModal.classList.add('hidden');
     
-    // Preserve mastered words but reset current level to beginning
+    // Clear localStorage to fully reset progress
+    localStorage.removeItem('rainbowReadersProgress');
+    
+    // Reset mastered words completely
+    mastered = {
+        red: [],
+        orange: [],
+        yellow: [],
+        green: [],
+        blue: [],
+        purple: [],
+        pink: [],
+        gold: []
+    };
+    
+    // Reset level and score
     currentLevelIndex = 0;
     currentLevel = LEVEL_ORDER[currentLevelIndex];
+    score = 0;
     
     // Update UI
     updateLevelIndicator();
     updateRainbowProgress();
+    updateScoreDisplay();
     
     // Reset level
     resetCurrentLevel();
@@ -854,38 +872,7 @@ function saveGameProgress() {
         console.log("localStorage error:", e);
     }
 }
-// Find this function and update it:
-function resetGame() {
-  goldCelebrationModal.classList.add('hidden');
-  
-  // Reset mastered words completely
-  mastered = {
-    red: [],
-    orange: [],
-    yellow: [],
-    green: [],
-    blue: [],
-    purple: [],
-    pink: [],
-    gold: []
-  };
-  
-  // Reset level and score
-  currentLevelIndex = 0;
-  currentLevel = LEVEL_ORDER[currentLevelIndex];
-  score = 0;
-  
-  // Update UI
-  updateLevelIndicator();
-  updateRainbowProgress();
-  updateScoreDisplay();
-  
-  // Reset current level
-  resetCurrentLevel();
-  
-  // Show start button
-  startBtn.classList.remove('hidden');
-}
+
 // Load game progress from localStorage
 function loadGameProgress() {
     try {

@@ -210,18 +210,8 @@ button:active {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    z-index: 1; /* Add this line */
-}
-
-/* And make sure the controls have a higher z-index */
-.controls {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 15px;
-    position: relative;
-    z-index: 10; /* Add this line - higher than the rainbow */
-}
+    z-index: 1;
+    pointer-events: none; /* This makes the rainbow "click-through" */
 }
 
 .rainbow-layer {
@@ -230,8 +220,24 @@ button:active {
     border-bottom: none;
     opacity: 0.3;
     transition: opacity 0.5s;
+    pointer-events: none; /* This makes each layer "click-through" */
 }
 
+/* Controls need higher z-index */
+.controls {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px;
+    position: relative;
+    z-index: 50; /* Much higher than rainbow */
+}
+
+/* Make sure buttons are clickable */
+.correct-button, .try-again-button, .record-button {
+    position: relative;
+    z-index: 100; /* Highest z-index */
+}
 .rainbow-layer.active {
     opacity: 1;
 }

@@ -27,7 +27,7 @@ body {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
-    overflow: visible; /* Allow overflow for absolute elements */
+    overflow: visible;
 }
 
 /* Header Styles */
@@ -65,4 +65,413 @@ body {
     display: flex;
     align-items: center;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.score-display::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #FFD700;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    margin-right: 10px;
+}
+
+/* Game Area */
+.game-area {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+#game-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+#word-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 20px rgba(255, 170, 170, 0.8);
+    animation: pulsate 1s infinite alternate;
+    z-index: 10;
+}
+
+#revealed-word {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #FF0000;
+}
+
+@keyframes pulsate {
+    0% { box-shadow: 0 0 10px rgba(255, 170, 170, 0.8); }
+    100% { box-shadow: 0 0 20px rgba(255, 170, 170, 0.8), 0 0 30px rgba(255, 170, 170, 0.6); }
+}
+/* Control Buttons */
+.controls {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px;
+    position: relative;
+    z-index: 10;
+    margin-bottom: 20px;
+}
+
+.record-button {
+    background: linear-gradient(to bottom, #FF7777, #EE3333);
+    color: white;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    position: relative;
+    z-index: 100;
+}
+
+.mic-icon {
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 50%;
+    margin-bottom: 4px;
+}
+
+.correct-button {
+    background: linear-gradient(to bottom, #77EE99, #22CC55);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    position: relative;
+    z-index: 100;
+}
+
+.try-again-button {
+    background: linear-gradient(to bottom, #FF8888, #FF4444);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    position: relative;
+    z-index: 100;
+}
+
+.start-button {
+    background: linear-gradient(to bottom, #77AAFF, #3377DD);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 25px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.help-button {
+    background: #F0F0F0;
+    color: #666;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #DDD;
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Rainbow Progress */
+.rainbow-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.rainbow-layer {
+    position: absolute;
+    border-radius: 1000px 1000px 0 0;
+    border-bottom: none;
+    opacity: 0.3;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.rainbow-layer.active {
+    opacity: 1;
+}
+
+#red-layer {
+    width: 560px;
+    height: 280px;
+    bottom: 0;
+    background: linear-gradient(to right, #FF5555, #FF0000);
+}
+
+#orange-layer {
+    width: 520px;
+    height: 260px;
+    bottom: 0;
+    background: linear-gradient(to right, #FFAA77, #FF8800);
+}
+
+#yellow-layer {
+    width: 480px;
+    height: 240px;
+    bottom: 0;
+    background: linear-gradient(to right, #FFEE88, #FFDD00);
+}
+
+#green-layer {
+    width: 440px;
+    height: 220px;
+    bottom: 0;
+    background: linear-gradient(to right, #99EE99, #33CC33);
+}
+
+#blue-layer {
+    width: 400px;
+    height: 200px;
+    bottom: 0;
+    background: linear-gradient(to right, #99CCFF, #3399FF);
+}
+
+#purple-layer {
+    width: 360px;
+    height: 180px;
+    bottom: 0;
+    background: linear-gradient(to right, #CC99FF, #9966FF);
+}
+
+#pink-layer {
+    width: 320px;
+    height: 160px;
+    bottom: 0;
+    background: linear-gradient(to right, #FFAADD, #FF66CC);
+}
+
+#gold-layer {
+    width: 280px;
+    height: 140px;
+    bottom: 0;
+    background: linear-gradient(to right, #FFEE88, #FFCC00);
+}
+
+#pot-of-gold {
+    position: absolute;
+    bottom: 0;
+    width: 80px;
+    height: 60px;
+    background: linear-gradient(to bottom, #A0522D, #8B4513);
+    border-radius: 40px 40px 0 0;
+    display: flex;
+    justify-content: center;
+    transition: opacity 1s;
+    opacity: 0;
+    z-index: 5;
+    pointer-events: none;
+}
+
+#pot-of-gold::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    width: 80px;
+    height: 20px;
+    background: linear-gradient(to bottom, #FFDF00, #FFD700);
+    border-radius: 50%;
+}
+
+#pot-of-gold.active {
+    opacity: 1;
+}
+
+/* Modals */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.celebration {
+    text-align: center;
+}
+
+#rainbow-animation {
+    height: 100px;
+    margin: 20px 0;
+    position: relative;
+}
+
+#celebration-coins {
+    height: 80px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.gold-celebration {
+    text-align: center;
+}
+
+#pot-animation {
+    height: 150px;
+    margin: 20px auto;
+    position: relative;
+}
+
+#all-words {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.word-coin {
+    background: linear-gradient(to bottom, #FFDF00, #DAA520);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #5D3C1D;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.continue-button {
+    background: linear-gradient(to bottom, #77AAFF, #3377DD);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 1.8rem;
+    }
+    
+    .level-indicator, .score-display {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .controls {
+        padding: 10px;
+    }
+    
+    #revealed-word {
+        font-size: 1.5rem;
+    }
+    
+    .rainbow-progress {
+        height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-title {
+        font-size: 1.5rem;
+    }
+    
+    .controls {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .record-button {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .correct-button, .try-again-button {
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+    
+    .start-button {
+        padding: 12px 20px;
+        font-size: 1.2rem;
+    }
+    
+    .help-button {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .rainbow-progress {
+        height: 60px;
+    }
 }

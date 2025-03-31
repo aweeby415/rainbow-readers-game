@@ -54,6 +54,24 @@
             <div class="rainbow-layer" id="gold-layer"></div>
             <div id="pot-of-gold" class="hidden"></div>
         </div>
+
+        /* Make rainbow visible again */
+.rainbow-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  z-index: 1; /* Positive but low z-index */
+  pointer-events: none;
+}
+
+/* Keep controls above rainbow */
+.controls {
+  position: relative;
+  z-index: 10;
+  margin-bottom: 20px; /* Space above rainbow */
+}
     </div>
     
     <div id="help-modal" class="modal hidden">

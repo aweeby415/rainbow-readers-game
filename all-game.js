@@ -1,5 +1,4 @@
 // ================ WORDS.JS SECTION ================
-// ================ WORDS.JS SECTION ================
 console.log("Loading combined JavaScript file...");
 
 // Rainbow Readers Sight Word Levels
@@ -126,7 +125,6 @@ const gameCanvas = document.getElementById('game-canvas');
 const ctx = gameCanvas.getContext('2d');
 const wordDisplay = document.getElementById('word-display');
 const revealedWord = document.getElementById('revealed-word');
-const recordBtn = document.getElementById('record-btn');
 const correctBtn = document.getElementById('correct-btn');
 const tryAgainBtn = document.getElementById('try-again-btn');
 const startBtn = document.getElementById('start-btn');
@@ -171,6 +169,7 @@ let spawnInterval = 4000; // Time between balloon spawns (ms)
 let canvasWidth, canvasHeight;
 
 // Sound effects - create empty Audio objects first, then assign sources
+// Sound effects - create empty Audio objects first, then assign sources
 const popSound = new Audio();
 const correctSound = new Audio();
 const wrongSound = new Audio();
@@ -197,7 +196,6 @@ window.addEventListener('resize', setCanvasSize);
 startBtn.addEventListener('click', startGame);
 helpBtn.addEventListener('click', showHelp);
 closeButton.addEventListener('click', hideHelp);
-recordBtn.addEventListener('click', handleRecording);
 correctBtn.addEventListener('click', handleCorrect);
 tryAgainBtn.addEventListener('click', handleTryAgain);
 continueBtn.addEventListener('click', continuePlaying);
@@ -237,7 +235,6 @@ function setCanvasSize() {
 function startGame() {
     console.log("Starting game...");
     startBtn.classList.add('hidden');
-    recordBtn.classList.add('hidden');
     correctBtn.classList.add('hidden');
     tryAgainBtn.classList.add('hidden');
     
@@ -408,8 +405,7 @@ class Balloon {
         wordDisplay.classList.remove('hidden');
         revealedWord.textContent = this.word;
         
-        // Show record and verification buttons
-        recordBtn.classList.remove('hidden');
+        // Show verification buttons
         correctBtn.classList.remove('hidden');
         tryAgainBtn.classList.remove('hidden');
         
@@ -481,21 +477,6 @@ function checkBalloonClick(x, y) {
             return;
         }
     }
-}
-
-// Handle recording
-function handleRecording() {
-    // In a real implementation, this would access the microphone
-    // For this demo, we'll simulate recording with visual feedback
-    
-    recordBtn.style.backgroundColor = '#FF0000';
-    recordBtn.querySelector('.mic-icon').style.backgroundColor = '#FF0000';
-    
-    // Simulate recording for 2 seconds
-    setTimeout(() => {
-        recordBtn.style.backgroundColor = '';
-        recordBtn.querySelector('.mic-icon').style.backgroundColor = 'white';
-    }, 2000);
 }
 
 // Handle correct answer
@@ -574,7 +555,6 @@ function handleTryAgain() {
 function resetWordDisplay() {
     wordDisplay.classList.add('hidden');
     revealedWord.textContent = '';
-    recordBtn.classList.add('hidden');
     correctBtn.classList.add('hidden');
     tryAgainBtn.classList.add('hidden');
     

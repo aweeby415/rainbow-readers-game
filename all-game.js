@@ -1,6 +1,25 @@
 // ================ WORDS.JS SECTION ================
 console.log("Loading combined JavaScript file...");
+// Add this at the beginning of your main JavaScript file to catch errors
+window.addEventListener('error', function(e) {
+  console.log('Error caught:', e.message, 'at', e.filename, 'line', e.lineno);
+});
 
+// Make sure the DOM is fully loaded before initializing the game
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize your game here
+  initGame();
+});
+
+// Basic game initialization function (adjust based on your existing code)
+function initGame() {
+  try {
+    // Your existing initialization code
+    console.log('Game initialized successfully');
+  } catch (error) {
+    console.error('Failed to initialize game:', error);
+  }
+}
 // Rainbow Readers Sight Word Levels
 const WORD_LEVELS = {
     red: [

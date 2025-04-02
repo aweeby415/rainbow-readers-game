@@ -417,6 +417,18 @@ body {
     cursor: pointer;
 }
 
+.start-button {
+    background: linear-gradient(to bottom, #77AAFF, #3377DD);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 25px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
 button:active {
     transform: translateY(2px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -763,4 +775,109 @@ button:active {
     width: 100%;
     height: 300px;
     background: #f0f8ff;
-    border-radius: 15px
+    border-radius: 15px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+#minigame-score, #minigame-timer {
+    position: absolute;
+    top: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    z-index: 5;
+}
+
+#minigame-score {
+    left: 10px;
+}
+
+#minigame-timer {
+    right: 10px;
+}
+
+#minigame-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .rainbow-title, .game-title {
+        font-size: 2rem;
+    }
+    
+    .level-indicator, .score-display {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .controls {
+        padding: 10px;
+    }
+    
+    #revealed-word {
+        font-size: 1.5rem;
+    }
+    
+    .rainbow-container {
+        height: 80px;
+    }
+    
+    .menu-button {
+        font-size: 1.2rem;
+        padding: 12px 20px;
+    }
+    
+    .level-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .rainbow-title, .game-title {
+        font-size: 1.5rem;
+    }
+    
+    .controls {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .correct-button, .try-again-button {
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+    
+    .help-button {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .rainbow-container {
+        height: 60px;
+    }
+    
+    .menu-button {
+        font-size: 1rem;
+        padding: 10px 15px;
+    }
+    
+    .level-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .difficulty-selector {
+        flex-direction: column;
+        padding: 5px;
+    }
+}

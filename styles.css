@@ -1,4 +1,3 @@
-styles.css
 * {
     margin: 0;
     padding: 0;
@@ -26,9 +25,249 @@ body {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
-    overflow: visible;
+    overflow: hidden;
 }
 
+/* Main Menu Styles */
+.menu-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    position: relative;
+    overflow: hidden;
+}
+
+.rainbow-title {
+    font-size: 3rem;
+    background: linear-gradient(to right, #FF3333, #FF8800, #FFCC00, #33CC33, #3399FF, #9966FF, #FF66CC, #FFCC00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
+    margin-bottom: 20px;
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 80%;
+    max-width: 400px;
+}
+
+.menu-button {
+    padding: 15px 30px;
+    border-radius: 25px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.menu-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+.menu-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.practice-button {
+    background: linear-gradient(to bottom, #77AAFF, #3377DD);
+    color: white;
+}
+
+.test-button {
+    background: linear-gradient(to bottom, #FFAA44, #FF8800);
+    color: white;
+}
+
+.difficulty-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.difficulty-selector span {
+    font-weight: bold;
+    color: #333;
+}
+
+.difficulty-button {
+    padding: 8px 15px;
+    border-radius: 15px;
+    border: 2px solid #ddd;
+    background: #f5f5f5;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.difficulty-button.active {
+    background: #3377DD;
+    color: white;
+    border-color: white;
+}
+
+.level-selector {
+    width: 90%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.level-selector h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.level-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.level-button {
+    padding: 12px;
+    border-radius: 15px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.level-button[data-level="red"] {
+    background: linear-gradient(to bottom, #FF5555, #FF0000);
+    color: white;
+}
+
+.level-button[data-level="orange"] {
+    background: linear-gradient(to bottom, #FFAA77, #FF8800);
+    color: white;
+}
+
+.level-button[data-level="yellow"] {
+    background: linear-gradient(to bottom, #FFEE88, #FFDD00);
+    color: #333;
+}
+
+.level-button[data-level="green"] {
+    background: linear-gradient(to bottom, #99EE99, #33CC33);
+    color: white;
+}
+
+.level-button[data-level="blue"] {
+    background: linear-gradient(to bottom, #99CCFF, #3399FF);
+    color: white;
+}
+
+.level-button[data-level="purple"] {
+    background: linear-gradient(to bottom, #CC99FF, #9966FF);
+    color: white;
+}
+
+.level-button[data-level="pink"] {
+    background: linear-gradient(to bottom, #FFAADD, #FF66CC);
+    color: white;
+}
+
+.level-button[data-level="gold"] {
+    background: linear-gradient(to bottom, #FFEE88, #FFCC00);
+    color: #333;
+}
+
+.level-button.locked {
+    background: #cccccc;
+    color: #999999;
+    cursor: not-allowed;
+}
+
+.level-button:not(.locked):hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.level-button:not(.locked):active {
+    transform: translateY(1px);
+}
+
+.mascot-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.mascot {
+    width: 80px;
+    height: 80px;
+    background: #ffffff;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mascot::before, .mascot::after {
+    content: '';
+    position: absolute;
+    background: #333;
+    border-radius: 50%;
+}
+
+.mascot::before {
+    width: 10px;
+    height: 10px;
+    top: 25px;
+    left: 25px;
+}
+
+.mascot::after {
+    width: 10px;
+    height: 10px;
+    top: 25px;
+    right: 25px;
+}
+
+.mascot::before, .mascot::after {
+    background: #333;
+}
+
+.speech-bubble {
+    position: absolute;
+    top: -60px;
+    left: 60px;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 220px;
+}
+
+.speech-bubble::after {
+    content: '';
+    position: absolute;
+    left: 20px;
+    bottom: -10px;
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: white transparent;
+}
+
+/* Game Screen Styles */
 .game-header {
     display: flex;
     justify-content: space-between;
@@ -79,6 +318,7 @@ body {
     flex: 1;
     position: relative;
     overflow: hidden;
+    z-index: 5;
 }
 
 #game-canvas {
@@ -122,32 +362,6 @@ body {
     padding: 15px;
     position: relative;
     z-index: 10;
-    margin-bottom: 20px;
-}
-
-.record-button {
-    background: linear-gradient(to bottom, #FF7777, #EE3333);
-    color: white;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    border: 2px solid white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    position: relative;
-    z-index: 100;
-}
-
-.mic-icon {
-    width: 24px;
-    height: 24px;
-    background-color: white;
-    border-radius: 50%;
-    margin-bottom: 4px;
 }
 
 .correct-button {
@@ -178,14 +392,14 @@ body {
     z-index: 100;
 }
 
-.start-button {
-    background: linear-gradient(to bottom, #77AAFF, #3377DD);
+.back-button {
+    background: linear-gradient(to bottom, #CCCCCC, #999999);
     color: white;
-    padding: 15px 30px;
-    border-radius: 25px;
+    padding: 10px 20px;
+    border-radius: 20px;
     border: none;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
@@ -208,14 +422,27 @@ button:active {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* Rainbow Container - Positioned at the bottom, won't interfere with gameplay */
+.rainbow-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+}
+
 .rainbow-progress {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     height: 100px;
+    display: flex;
+    justify-content: center;
     z-index: 1;
-    pointer-events: none;
 }
 
 .rainbow-layer {
@@ -224,7 +451,6 @@ button:active {
     border-bottom: none;
     opacity: 0.3;
     transition: opacity 0.5s;
-    pointer-events: none;
 }
 
 .rainbow-layer.active {
@@ -235,6 +461,8 @@ button:active {
     width: 560px;
     height: 280px;
     bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     background: linear-gradient(to right, #FF5555, #FF0000);
 }
 
@@ -242,6 +470,8 @@ button:active {
     width: 520px;
     height: 260px;
     bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     background: linear-gradient(to right, #FFAA77, #FF8800);
 }
 
@@ -249,6 +479,8 @@ button:active {
     width: 480px;
     height: 240px;
     bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     background: linear-gradient(to right, #FFEE88, #FFDD00);
 }
 
@@ -256,6 +488,8 @@ button:active {
     width: 440px;
     height: 220px;
     bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     background: linear-gradient(to right, #99EE99, #33CC33);
 }
 
@@ -263,6 +497,8 @@ button:active {
     width: 400px;
     height: 200px;
     bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     background: linear-gradient(to right, #99CCFF, #3399FF);
 }
 
@@ -270,6 +506,8 @@ button:active {
     width: 360px;
     height: 180px;
     bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     background: linear-gradient(to right, #CC99FF, #9966FF);
 }
 
@@ -277,6 +515,8 @@ button:active {
     width: 320px;
     height: 160px;
     bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     background: linear-gradient(to right, #FFAADD, #FF66CC);
 }
 
@@ -284,12 +524,16 @@ button:active {
     width: 280px;
     height: 140px;
     bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     background: linear-gradient(to right, #FFEE88, #FFCC00);
 }
 
 #pot-of-gold {
     position: absolute;
     bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 80px;
     height: 60px;
     background: linear-gradient(to bottom, #A0522D, #8B4513);
@@ -299,7 +543,6 @@ button:active {
     transition: opacity 1s;
     opacity: 0;
     z-index: 5;
-    pointer-events: none;
 }
 
 #pot-of-gold::before {
@@ -316,6 +559,94 @@ button:active {
     opacity: 1;
 }
 
+/* Decorative Clouds */
+.cloud {
+    position: absolute;
+    background: white;
+    border-radius: 100px;
+    opacity: 0.8;
+    z-index: 2;
+}
+
+.cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+}
+
+.cloud-1 {
+    width: 100px;
+    height: 40px;
+    bottom: 80px;
+    left: 50px;
+    animation: float-cloud 15s infinite alternate ease-in-out;
+}
+
+.cloud-1::before {
+    width: 50px;
+    height: 50px;
+    top: -20px;
+    left: 15px;
+}
+
+.cloud-1::after {
+    width: 40px;
+    height: 40px;
+    top: -15px;
+    right: 15px;
+}
+
+.cloud-2 {
+    width: 120px;
+    height: 40px;
+    bottom: 90px;
+    right: 80px;
+    animation: float-cloud 18s infinite alternate-reverse ease-in-out;
+}
+
+.cloud-2::before {
+    width: 60px;
+    height: 60px;
+    top: -30px;
+    left: 20px;
+}
+
+.cloud-2::after {
+    width: 50px;
+    height: 50px;
+    top: -20px;
+    right: 15px;
+}
+
+.cloud-3 {
+    width: 80px;
+    height: 30px;
+    bottom: 70px;
+    left: 250px;
+    animation: float-cloud 12s infinite alternate ease-in-out;
+}
+
+.cloud-3::before {
+    width: 40px;
+    height: 40px;
+    top: -15px;
+    left: 10px;
+}
+
+.cloud-3::after {
+    width: 30px;
+    height: 30px;
+    top: -10px;
+    right: 10px;
+}
+
+@keyframes float-cloud {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(30px); }
+}
+
+/* Modals */
 .modal {
     position: fixed;
     top: 0;
@@ -339,7 +670,7 @@ button:active {
     position: relative;
 }
 
-.close-button {
+.close-button, .close-minigame-button {
     position: absolute;
     top: 10px;
     right: 15px;
@@ -404,67 +735,32 @@ button:active {
     font-size: 1.2rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
+    margin: 5px;
 }
 
-.hidden {
-    display: none;
+.minigame-button {
+    background: linear-gradient(to bottom, #FFAA44, #FF8800);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    margin: 5px;
 }
 
-@media (max-width: 768px) {
-    .game-title {
-        font-size: 1.8rem;
-    }
-    
-    .level-indicator, .score-display {
-        padding: 8px 12px;
-        font-size: 0.9rem;
-    }
-    
-    .controls {
-        padding: 10px;
-    }
-    
-    #revealed-word {
-        font-size: 1.5rem;
-    }
-    
-    .rainbow-progress {
-        height: 80px;
-    }
+/* Mini-game Styles */
+.minigame-content {
+    padding: 15px;
+    max-width: 600px;
+    width: 90%;
 }
 
-@media (max-width: 480px) {
-    .game-title {
-        font-size: 1.5rem;
-    }
-    
-    .controls {
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    
-    .record-button {
-        width: 60px;
-        height: 60px;
-    }
-    
-    .correct-button, .try-again-button {
-        padding: 10px 15px;
-        font-size: 1rem;
-    }
-    
-    .start-button {
-        padding: 12px 20px;
-        font-size: 1.2rem;
-    }
-    
-    .help-button {
-        width: 35px;
-        height: 35px;
-        font-size: 1rem;
-    }
-    
-    .rainbow-progress {
-        height: 60px;
-    }
-}
+#minigame-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background: #f0f8ff;
+    border-radius: 15px

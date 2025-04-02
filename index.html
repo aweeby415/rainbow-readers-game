@@ -6,101 +6,107 @@
     <title>Rainbow Readers Balloon Pop</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Add this just before the closing </head> tag in index.html -->
-<style>
-  .rainbow-progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100px;
-    z-index: 1;
-    pointer-events: none;
-  }
-  
-  .controls {
-    position: relative;
-    z-index: 10;
-    margin-bottom: 20px;
-  }
-</style>
 </head>
 <body>
     <div class="game-container">
-        <div class="game-header">
-            <div class="level-indicator">
-                <span id="current-level-text">RED LEVEL</span>
+        <!-- Main Menu -->
+        <div id="main-menu" class="menu-screen">
+            <h1 class="rainbow-title">Rainbow Balloons</h1>
+            
+            <div class="menu-buttons">
+                <button id="practice-btn" class="menu-button practice-button">Practice Mode</button>
+                <button id="test-btn" class="menu-button test-button">Test Mode</button>
+                <div class="difficulty-selector">
+                    <span>Speed:</span>
+                    <button id="easy-btn" class="difficulty-button active">Easy</button>
+                    <button id="medium-btn" class="difficulty-button">Medium</button>
+                    <button id="hard-btn" class="difficulty-button">Hard</button>
+                </div>
             </div>
-            <h1 class="game-title">Rainbow Balloons</h1>
-            <div class="score-display">
-                <span id="score">0</span>
+            
+            <div id="level-select" class="level-selector">
+                <h2>Select Level:</h2>
+                <div class="level-buttons">
+                    <button id="red-btn" class="level-button" data-level="red">Red</button>
+                    <button id="orange-btn" class="level-button" data-level="orange">Orange</button>
+                    <button id="yellow-btn" class="level-button" data-level="yellow">Yellow</button>
+                    <button id="green-btn" class="level-button" data-level="green">Green</button>
+                    <button id="blue-btn" class="level-button" data-level="blue">Blue</button>
+                    <button id="purple-btn" class="level-button" data-level="purple">Purple</button>
+                    <button id="pink-btn" class="level-button" data-level="pink">Pink</button>
+                    <button id="gold-btn" class="level-button" data-level="gold">Gold</button>
+                </div>
+            </div>
+            
+            <div class="mascot-container">
+                <div class="mascot"></div>
+                <div class="speech-bubble">Pop balloons to practice sight words!</div>
             </div>
         </div>
         
-        <div class="game-area">
-            <canvas id="game-canvas"></canvas>
-            <div id="word-display" class="hidden">
-                <p id="revealed-word"></p>
+        <!-- Game Screen -->
+        <div id="game-screen" class="hidden">
+            <div class="game-header">
+                <div class="level-indicator">
+                    <span id="current-level-text">RED LEVEL</span>
+                </div>
+                <h1 class="game-title">Rainbow Balloons</h1>
+                <div class="score-display">
+                    <span id="score">0</span>
+                </div>
+            </div>
+            
+            <div class="game-area">
+                <canvas id="game-canvas"></canvas>
+                <div id="word-display" class="hidden">
+                    <p id="revealed-word"></p>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button id="correct-btn" class="correct-button hidden">Correct!</button>
+                <button id="try-again-btn" class="try-again-button hidden">Try Again</button>
+                <button id="back-btn" class="back-button">◀ Menu</button>
+                <button id="help-btn" class="help-button">?</button>
+            </div>
+            
+            <div class="rainbow-container">
+                <div class="rainbow-progress">
+                    <div class="rainbow-layer" id="red-layer"></div>
+                    <div class="rainbow-layer" id="orange-layer"></div>
+                    <div class="rainbow-layer" id="yellow-layer"></div>
+                    <div class="rainbow-layer" id="green-layer"></div>
+                    <div class="rainbow-layer" id="blue-layer"></div>
+                    <div class="rainbow-layer" id="purple-layer"></div>
+                    <div class="rainbow-layer" id="pink-layer"></div>
+                    <div class="rainbow-layer" id="gold-layer"></div>
+                    <div id="pot-of-gold" class="hidden"></div>
+                </div>
+                <!-- Decorative clouds -->
+                <div class="cloud cloud-1"></div>
+                <div class="cloud cloud-2"></div>
+                <div class="cloud cloud-3"></div>
             </div>
         </div>
-        <div class="rainbow-progress">
-    <!-- Rainbow layers -->
-</div>
-
-<div class="controls">
-    <!-- Buttons -->
-</div>
-        <div class="controls">
-            <button id="record-btn" class="record-button hidden">
-                <div class="mic-icon"></div>
-                <span>RECORD</span>
-            </button>
-            <button id="correct-btn" class="correct-button hidden">Correct!</button>
-            <button id="try-again-btn" class="try-again-button hidden">Try Again</button>
-            <button id="start-btn" class="start-button">Start Game</button>
-            <button id="help-btn" class="help-button">?</button>
-        </div>
-        
-        <div class="rainbow-progress">
-            <div class="rainbow-layer" id="red-layer"></div>
-            <div class="rainbow-layer" id="orange-layer"></div>
-            <div class="rainbow-layer" id="yellow-layer"></div>
-            <div class="rainbow-layer" id="green-layer"></div>
-            <div class="rainbow-layer" id="blue-layer"></div>
-            <div class="rainbow-layer" id="purple-layer"></div>
-            <div class="rainbow-layer" id="pink-layer"></div>
-            <div class="rainbow-layer" id="gold-layer"></div>
-            <div id="pot-of-gold" class="hidden"></div>
-        </div>
-
-        /* Make rainbow visible again */
-.rainbow-progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100px;
-  z-index: 1; /* Positive but low z-index */
-  pointer-events: none;
-}
-
-/* Keep controls above rainbow */
-.controls {
-  position: relative;
-  z-index: 10;
-  margin-bottom: 20px; /* Space above rainbow */
-}
     </div>
     
+    <!-- Modals -->
     <div id="help-modal" class="modal hidden">
         <div class="modal-content">
             <span class="close-button">&times;</span>
             <h2>How to Play</h2>
             <p>1. Pop the balloons by tapping or clicking on them</p>
             <p>2. Read the word that appears</p>
-            <p>3. Press RECORD and say the word</p>
-            <p>4. A grown-up will press Correct or Try Again</p>
+            <p>3. A parent or teacher should confirm if you read the word correctly</p>
+            <p>4. Press "Correct!" if you got it right, or "Try Again" if needed</p>
             <p>5. Complete all words to move to the next color!</p>
+            <h3>Game Modes:</h3>
+            <p><strong>Practice Mode:</strong> Practice words from the level you select</p>
+            <p><strong>Test Mode:</strong> Test yourself on all words from unlocked levels</p>
+            <h3>Difficulty Settings:</h3>
+            <p><strong>Easy:</strong> Slower balloons for beginners</p>
+            <p><strong>Medium:</strong> Regular speed balloons</p>
+            <p><strong>Hard:</strong> Fast balloons for a challenge</p>
         </div>
     </div>
     
@@ -111,6 +117,7 @@
             <div id="rainbow-animation"></div>
             <div id="celebration-coins"></div>
             <button id="continue-btn" class="continue-button">Continue</button>
+            <button id="play-minigame-btn" class="minigame-button">Play Mini-Game!</button>
         </div>
     </div>
     
@@ -120,9 +127,25 @@
             <div id="pot-animation"></div>
             <div id="all-words"></div>
             <button id="play-again-btn" class="continue-button">Play Again</button>
+            <button id="super-minigame-btn" class="minigame-button">Special Mini-Game!</button>
         </div>
     </div>
-    <script src="test.js"></script>
- <script src="all-game.js"></script>
+    
+    <!-- Mini-game Modal -->
+    <div id="minigame-modal" class="modal hidden">
+        <div class="modal-content minigame-content">
+            <span class="close-minigame-button">&times;</span>
+            <h2>Balloon Pop Frenzy!</h2>
+            <div id="minigame-container">
+                <div id="minigame-score">Score: 0</div>
+                <div id="minigame-timer">Time: 30</div>
+                <canvas id="minigame-canvas"></canvas>
+            </div>
+            <button id="minigame-start-btn" class="continue-button">Start!</button>
+            <button id="minigame-exit-btn" class="back-button hidden">Back to Game</button>
+        </div>
+    </div>
+    
+    <script src="all-game.js"></script>
 </body>
 </html>
